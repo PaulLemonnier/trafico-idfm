@@ -1,0 +1,30 @@
+{
+    "line": {
+        "rer_a": "C01742",
+        "metro_8": "C01378"
+    },
+
+    "monitoring": {
+        "Châtelet-les-Halles": "474151",
+        "Maisons-Laffitte": "473109",
+        "Saint-Germain-en-Laye": "43198",
+        "La Défense": "470549",
+        "École Vétérinaire de Maisons-Alfort TO Balard": "463047", 
+        "École Vétérinaire de Maisons-Alfort TO Créteil-Pointe du Lac": "22214",
+        "Opéra Métro 8 TO Balard": "463244",
+        "Opéra Métro 8 TO Créteil-Pointe du Lac": "22195",
+        "Opéra RER A": "45873"
+    },
+
+    "right_destination": [
+        "Marne-la-Vallée Chessy",
+        "Boissy-Saint-Léger",
+        "Torcy"
+    ],
+
+    "left_destination": [
+        "Cergy le Haut", 
+        "Poissy"
+    ]
+
+}
