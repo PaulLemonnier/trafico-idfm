@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Header
 from fastapi.encoders import jsonable_encoder
 
-from src.api.domain.core import format_result, check_api_key
-from src.api.domain.rer import compute_rer_route
-from src.api.domain.metro import compute_metro_route
+from src.api.domain.core import check_api_key
+from src.api.domain.rer import compute_rer_route, format_rer_result
+from src.api.domain.metro import compute_metro_route, format_metro_result
 from src.api.models import RERRouteRequest, MetroRouteRequest
 
 
@@ -23,13 +23,13 @@ def post_for_rer_route(
     
     check_api_key(x_api_key)
 
-    formated_train_route = format_result(compute_rer_route(initial_station=payload.initial_station, 
+    formated_train_route = format_rer_result(compute_rer_route(initial_station=payload.initial_station, 
                                  line=payload.line, 
                                  direction=payload.direction
                                 ))
 
     return jsonable_encoder({
-        "taskName": f"Trajet {payload.round_trip} {payload.user}",
+        "taskName": f"Trajet {payload.initial_station} TO {payload.direction}",
         "infos": formated_train_route
     })
 
@@ -41,9 +41,9 @@ def post_for_metro_route(
     
     check_api_key(x_api_key)
 
-    formated_train_route = format_result(compute_metro_route(destination=payload.destination, line=payload.line))
+    formated_train_route = format_metro_result(compute_metro_route(destination=payload.destination, line=payload.line))
 
     return jsonable_encoder({
-        "taskName": f"Trajet {payload.round_trip} {payload.user}",
+        "taskName": f"Trajet {payload.destination}",
         "infos": formated_train_route
     })

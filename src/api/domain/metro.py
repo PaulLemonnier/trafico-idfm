@@ -67,3 +67,18 @@ def compute_metro_route(destination: str="École Vétérinaire de Maisons-Alfort
     df_trains = format_metro_payload(data)
     df_trains["type"] = line
     return df_trains
+
+def format_metro_result(df_result: pd.DataFrame) -> str:
+    """Format the DataFrame to obtain a formated string"""
+    formated_result = ""
+    shortname_destination = load_train_ref().get("shortname_destination")
+    df_result = df_result.sort_values(by=["expected_departure_from_now"]).reset_index(drop=True).head(5)
+    for index in df_result.index:
+        train_type = df_result.loc[index,"type"] # train type (ex: RERA)
+        train_destination = shortname_destination.get(df_result.loc[index,"destination"], df_result.loc[index,"destination"]) # train destination (ex: Cergy)
+        expected_departure_from_now = df_result.loc[index,"expected_departure_from_now"] # number of minutes before departure (ex: 4)
+        formated_expected_departure_time = df_result.loc[index,"formated_expected_departure_time"] # departure time (ex: 9:45)
+
+        time_string = f" • {expected_departure_from_now} min 🕦 {formated_expected_departure_time}"
+        formated_result += f"🚇{train_type} → 📍 {train_destination}{time_string}\n\n"
+    return formated_result
