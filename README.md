@@ -26,6 +26,7 @@ Mettre à jour le système et installer les dépendances :
 sudo apt update
 sudo apt upgrade -y
 sudo apt install git python3-venv python3-pip -y
+sudo apt install libopenblas0 # HACK: install OpenBLAS to bypass numpy error
 ```
 
 Cloner le dépôt du projet :
