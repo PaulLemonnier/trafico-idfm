@@ -1,5 +1,9 @@
 # Deploy project on RasberryPi
 
+0) Move the services to systemd
+```bash
+sudo cp api.service telegram.service /etc/systemd/system/
+```
 
 1) Install requirements
 ```bash

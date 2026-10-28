@@ -11,7 +11,7 @@ User=paul
 
 WorkingDirectory=/home/paul/trafico-idfm/
 
-ExecStart=/home/paul/trafico-idfm/venv/bin/python -m src.telegram.main
+ExecStart=/home/paul/trafico-idfm/.venv/bin/python -m src.telegram.main
 
 # INFO: Automatically restart the service when crash
 Restart=always

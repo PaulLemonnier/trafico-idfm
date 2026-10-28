@@ -8,7 +8,7 @@ User=paul
 
 WorkingDirectory=/home/paul/trafico-idfm
 
-ExecStart=/home/paul/trafico-idfm/venv/bin/python -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000
+ExecStart=/home/paul/trafico-idfm/.venv/bin/python -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000
 
 # INFO: Automatically restart the service when crash
 Restart=always
