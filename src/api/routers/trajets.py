@@ -1,31 +1,13 @@
-from pydantic import BaseModel
-from fastapi import APIRouter, Header, HTTPException
+from fastapi import APIRouter, Header
 from fastapi.encoders import jsonable_encoder
 
-from src.core import compute_rer_route, compute_metro_route, format_result
-from src.config import settings
-
-router = APIRouter(tags=["trajets"])
-
-
-class RERRouteRequest(BaseModel):
-    user: str = "Paul"
-    round_trip: str = "aller"
-    initial_station: str = "Maisons-Laffitte"
-    line: str = "rer_a"
-    direction: str = "right_destination"
-
-class MetroRouteRequest(BaseModel):
-    user: str = "Sabrina"
-    round_trip: str = "aller"
-    destination: str = "Opéra Métro 8 TO Créteil-Pointe du Lac"
-    line: str = "metro_8"
+from src.api.domain.core import format_result, check_api_key
+from src.api.domain.rer import compute_rer_route
+from src.api.domain.metro import compute_metro_route
+from src.api.models import RERRouteRequest, MetroRouteRequest
 
 
-def check_api_key(x_api_key: str | None):
-    if not x_api_key or x_api_key!=settings.API_KEY.get_secret_value():
-        raise HTTPException(status_code=401, detail="Unauthorized")
-
+router = APIRouter(tags=["Trajets"])
 
 @router.get("/status")
 def status(x_api_key: str | None = Header(default=None)):
