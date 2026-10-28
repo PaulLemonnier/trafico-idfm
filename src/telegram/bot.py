@@ -1,20 +1,17 @@
 
 import asyncio
-import os
 import logging
-
 import httpx
 from aiogram import Bot, Dispatcher
 from aiogram.filters import Command
 from aiogram.types import Message
-from dotenv import load_dotenv
 
-load_dotenv()
+from src.config import settings
 
-TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
-API_URL = os.environ["API_URL"].rstrip("/")
-API_KEY = os.environ["API_KEY"]
-ALLOWED_CHAT_ID = int(os.environ["ALLOWED_CHAT_ID"])
+TELEGRAM_BOT_TOKEN = settings.TELEGRAM_BOT_TOKEN.get_secret_value()
+API_URL = settings.API_URL.rstrip("/")
+API_KEY = settings.API_KEY.get_secret_value()
+ALLOWED_CHAT_ID = int(settings.ALLOWED_CHAT_ID)
 
 dp = Dispatcher()
 

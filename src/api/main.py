@@ -1,19 +1,15 @@
 
-import os
 import secrets
-
+from pydantic import BaseModel
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.encoders import jsonable_encoder
-from pydantic import BaseModel
-from dotenv import load_dotenv
 
-from core import compute_rer_route, compute_metro_route, format_result
-
-load_dotenv()
+from src.core import compute_rer_route, compute_metro_route, format_result
+from src.config import settings
 
 app = FastAPI(title="API for Trafico")
 
-API_KEY = os.environ["API_KEY"]
+API_KEY = settings.API_KEY
 
 class RERRouteRequest(BaseModel):
     user: str = "Paul"
@@ -30,7 +26,7 @@ class MetroRouteRequest(BaseModel):
 
 
 def check_api_key(x_api_key: str | None):
-    if not x_api_key or not secrets.compare_digest(x_api_key, API_KEY):
+    if not x_api_key or not secrets.compare_digest(x_api_key, settings.API_KEY.get_secret_value()):
         raise HTTPException(status_code=401, detail="Unauthorized")
 
 
@@ -75,4 +71,4 @@ def post_for_metro_route(
 
 
 # Launch API
-# python -m uvicorn api:app --reload --host 127.0.0.1 --port 8000
+# python -m uvicorn src.api.main:app --reload --host 127.0.0.1 --port 8000

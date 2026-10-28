@@ -1,19 +1,18 @@
-import os
 import requests
 import pandas as pd
 import numpy as np
 import json
-
-from dotenv import load_dotenv
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
-load_dotenv()
+from src.config import settings
+
+
 paris_tz = ZoneInfo("Europe/Paris")
 
 HOST = "https://prim.iledefrance-mobilites.fr/"
 BASE_URL = "marketplace/stop-monitoring"
-API_KEY = os.getenv("IDFM_API_KEY")
+API_KEY = settings.IDFM_API_KEY.get_secret_value()
 
 def request_api_info(params: dict[str,str]) -> dict:
     """Request the IDFM API with the selected lines"""
