@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
-import json
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
+from src.api.domain.core import load_train_ref
 from src.services.idfm_api import request_api_info
 
 paris_tz = ZoneInfo("Europe/Paris")
@@ -46,9 +46,6 @@ def format_rer_payload(payload:dict) -> pd.DataFrame:
         lambda x: datetime.fromisoformat(str(x)).astimezone(ZoneInfo("Europe/Paris"))
         ) 
 
-    print(df_trains["expected_departure"].head())
-    print(df_trains["expected_departure_time"].head())
-
     # INFO: column creation for time readability
     df_trains["formated_expected_departure_time"] = df_trains["expected_departure_time"].dt.strftime("%H:%M")
     df_trains["expected_departure_from_now"] = ((df_trains["expected_departure_time"] - datetime.now(paris_tz)).dt.total_seconds() / 60).round().astype(int)
@@ -75,8 +72,7 @@ def compute_rer_route(initial_station: str="Maisons-Laffitte",
                         direction: str="right_destination") -> pd.DataFrame:
     """Send the formated result with selected parameter"""
     # INFO: read ref.json
-    with open('src/conf/ref.json', 'r', encoding="utf-8") as f:
-        ref = json.loads(f.read())
+    ref = load_train_ref()
 
     id_monitoring = ref["monitoring"][initial_station]
     id_line = ref["line"][line]
@@ -85,7 +81,6 @@ def compute_rer_route(initial_station: str="Maisons-Laffitte",
         "MonitoringRef": f"STIF:StopArea:SP:{id_monitoring}:",
         "LineRef": f"STIF:Line::{id_line}:"
     }
-
     data = request_api_info(params)
     df_trains = format_rer_payload(data)
     df_trains["type"] = line

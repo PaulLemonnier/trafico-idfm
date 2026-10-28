@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
+from src.api.domain.core import load_train_ref
 from src.services.idfm_api import request_api_info
 
 
@@ -52,8 +53,7 @@ def compute_metro_route(destination: str="École Vétérinaire de Maisons-Alfort
                         line: str="metro_8") -> pd.DataFrame:
     """Send the formated result with selected parameter"""
     # INFO: read ref.json
-    with open('src/conf/ref.json', 'r', encoding="utf-8") as f:
-        ref = json.loads(f.read())
+    ref = load_train_ref()
 
     id_monitoring = ref["monitoring"][destination]
     id_line = ref["line"][line]

@@ -1,7 +1,7 @@
 {
     "line": {
-        "rer_a": "C01742",
-        "metro_8": "C01378"
+        "RERA": "C01742",
+        "M8": "C01378"
     },
 
     "monitoring": {
@@ -25,6 +25,14 @@
     "left_destination": [
         "Cergy le Haut", 
         "Poissy"
-    ]
+    ],
+    
+    "shortname_destination": {
+        "Marne-la-Vallée Chessy": "Marne-la-Vallée",
+        "Boissy-Saint-Léger": "Boissy",
+        "Cergy le Haut": "Cergy",
+        "École Vétérinaire de Maisons-Alfort": "École Vétérinaire",
+        "Créteil-Pointe du Lac": "Créteil"
+    }
 
 }

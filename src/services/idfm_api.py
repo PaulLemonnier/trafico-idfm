@@ -1,4 +1,5 @@
 import requests
+import json
 
 from src.config import settings
 
@@ -17,7 +18,7 @@ def request_api_info(params: dict[str,str]) -> dict:
     # print("HTTP status code:", response.status_code)
 
     # INFO: Insert data inside file
-    # with open('../../data/output_payload.json', 'w', encoding="utf-8") as f:
+    # with open('src/data/output_payload.json', 'w', encoding="utf-8") as f:
     #     f.write(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
     return response.json()
