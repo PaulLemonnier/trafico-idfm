@@ -1,0 +1,21 @@
+[Unit]
+Description=Mon bot Telegram
+After=network.target
+
+After=network.target api.service
+Requires=api.service
+
+[Service]
+# INFO: User name Linux
+User=paul
+
+WorkingDirectory=/home/paul/trafico-idfm/
+
+ExecStart=/home/paul/trafico-idfm/venv/bin/python -m src.telegram.main
+
+# INFO: Automatically restart the service when crash
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

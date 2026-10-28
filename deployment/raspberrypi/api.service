@@ -1,0 +1,18 @@
+[Unit]
+Description=Mon API FastAPI
+After=network.target
+
+[Service]
+# INFO: User name Linux
+User=paul
+
+WorkingDirectory=/home/paul/trafico-idfm
+
+ExecStart=/home/paul/trafico-idfm/venv/bin/python -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000
+
+# INFO: Automatically restart the service when crash
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
