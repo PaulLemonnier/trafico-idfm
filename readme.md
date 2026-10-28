@@ -45,5 +45,5 @@ source .venv/bin/activate
 Installer les dépendances Python :
 
 ```bash
-pip install -r requirements.txt
+pip install -e .
 ```

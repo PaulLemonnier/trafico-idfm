@@ -1,9 +1,0 @@
-python-dotenv==1.2.4
-requests==2.34.2
-tzdata==2026.5
-pandas==3.0.6
-numpy==2.5.4
-aiogram==3.31.0
-httpx==0.28.1
-fastapi==0.143.0
-uvicorn==0.54.0
