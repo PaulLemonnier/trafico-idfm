@@ -31,15 +31,16 @@ sudo apt install git python3-venv python3-pip -y
 Cloner le dépôt du projet :
 
 ```bash
-git clone <URL_DU_DEPOT>
-cd <NOM_DU_PROJET>
+git clone https://github.com/PaulLemonnier/trafico-idfm.git
+cd trafico-idfm
 ```
 
 Créer et activer un environnement virtuel Python :
 
 ```bash
 python3 -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate #for Linux
+source .venv/Scripts/activate #for Windows
 ```
 
 Installer les dépendances Python :

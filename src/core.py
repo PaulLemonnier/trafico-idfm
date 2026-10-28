@@ -1,31 +1,13 @@
-import requests
 import pandas as pd
 import numpy as np
 import json
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
-from src.config import settings
+from src.services.idfm_api import request_api_info
 
 
 paris_tz = ZoneInfo("Europe/Paris")
-
-HOST = "https://prim.iledefrance-mobilites.fr/"
-BASE_URL = "marketplace/stop-monitoring"
-API_KEY = settings.IDFM_API_KEY.get_secret_value()
-
-def request_api_info(params: dict[str,str]) -> dict:
-    """Request the IDFM API with the selected lines"""
-    headers = {"Accept": "application/json", "apikey": API_KEY}
-    response = requests.get(HOST + BASE_URL, params=params, headers=headers, timeout=20)
-    # print("URL called :", response.url)
-    # print("HTTP status code:", response.status_code)
-
-    # INFO: Insert data inside file
-    # with open('../data/output_payload.json', 'w', encoding="utf-8") as f:
-    #     f.write(json.dumps(response.json(), indent=2, ensure_ascii=False))
-
-    return response.json()
 
 def format_rer_payload(payload:dict) -> pd.DataFrame:
     """Format the API output payload to render a pandas DataFrame with selected column"""
@@ -133,7 +115,7 @@ def compute_rer_route(initial_station: str="Maisons-Laffitte",
                         direction: str="right_destination") -> pd.DataFrame:
     """Send the formated result with selected parameter"""
     # INFO: read ref.json
-    with open('../conf/ref.json', 'r', encoding="utf-8") as f:
+    with open('src/conf/ref.json', 'r', encoding="utf-8") as f:
         ref = json.loads(f.read())
 
     id_monitoring = ref["monitoring"][initial_station]
@@ -153,7 +135,7 @@ def compute_metro_route(destination: str="École Vétérinaire de Maisons-Alfort
                         line: str="metro_8") -> pd.DataFrame:
     """Send the formated result with selected parameter"""
     # INFO: read ref.json
-    with open('../conf/ref.json', 'r', encoding="utf-8") as f:
+    with open('src/conf/ref.json', 'r', encoding="utf-8") as f:
         ref = json.loads(f.read())
 
     id_monitoring = ref["monitoring"][destination]
