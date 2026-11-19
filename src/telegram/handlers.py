@@ -115,7 +115,7 @@ async def run_task_delay(bot: Bot, channel_id: int):
     }
     if await is_rer_delay(**payload):
         data = await api_client.post_trajet_rer(payload)
-        await send_message(bot, channel_id, data["infos"])
+        await send_message(bot, channel_id, f"{data['taskName']}\n{data['infos']}")
 
 
 async def add_job_on_startup(bot: Bot, scheduler: AsyncIOScheduler) -> None:

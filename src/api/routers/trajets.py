@@ -1,8 +1,10 @@
+from datetime import datetime
+
 from fastapi import APIRouter, Header
 from fastapi.encoders import jsonable_encoder
 
 from src.api.domain.core import check_api_key
-from src.api.domain.rer import compute_rer_route, format_rer_result
+from src.api.domain.rer import compute_rer_route, format_rer_for_screen, format_rer_result
 from src.api.domain.metro import compute_metro_route, format_metro_result
 from src.api.models import RERRouteRequest, MetroRouteRequest
 
@@ -46,4 +48,21 @@ def post_for_metro_route(
     return jsonable_encoder({
         "taskName": f"Trajet {payload.destination}",
         "infos": formated_train_route
+    })
+
+@router.post("/display_screen")
+def post_display_screen(
+    x_api_key: str | None = Header(default=None)
+    ):
+    
+    check_api_key(x_api_key)
+
+    trains_infos = format_rer_for_screen(compute_rer_route(initial_station="Maisons-Laffitte", 
+                                    line="RERA",
+                                    direction="right_destination"
+                                ))
+
+    return jsonable_encoder({
+        "clock": datetime.now().strftime("%H:%M:%S"),
+        "trains": trains_infos
     })
