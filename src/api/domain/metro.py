@@ -50,7 +50,7 @@ def format_metro_payload(payload:dict) -> pd.DataFrame:
     return df_trains
 
 def compute_metro_route(destination: str="École Vétérinaire de Maisons-Alfort TO Balard", 
-                        line: str="metro_8") -> pd.DataFrame:
+                        line: str="M8") -> pd.DataFrame:
     """Send the formated result with selected parameter"""
     # INFO: read ref.json
     ref = load_train_ref()

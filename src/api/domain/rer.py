@@ -68,7 +68,7 @@ def format_rer_payload(payload:dict) -> pd.DataFrame:
 
 
 def compute_rer_route(initial_station: str="Maisons-Laffitte", 
-                        line: str="rer_a", 
+                        line: str="RERA", 
                         direction: str="right_destination") -> pd.DataFrame:
     """Send the formated result with selected parameter"""
     # INFO: read ref.json
