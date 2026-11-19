@@ -9,7 +9,7 @@
 
 <style>
 /* =================================
-   CONFIGURATION GRAPHIQUE
+   GRAPHICS CONFIGURATION
 ================================= */
 
 :root {
@@ -44,7 +44,7 @@ body {
 }
 
 /* =================================
-   BANDEAU SUPERIEUR
+   HEADER
 ================================= */
 
 .header {
@@ -80,7 +80,7 @@ body {
 }
 
 /* =================================
-   HORLOGE
+   CLOCK
 ================================= */
 
 .clock-panel {
@@ -103,7 +103,7 @@ body {
 }
 
 /* =================================
-   TABLEAU DES TRAINS
+   TRAIN TABLE
 ================================= */
 
 .train-panel {
@@ -165,18 +165,18 @@ body {
 
 <div class="screen">
 
-    <!-- BANDEAU -->
+    <!-- HEADER -->
     <div class="header">
         <div class="logo" id="logo"></div>
         <div class="station" id="station"></div>
     </div>
 
-    <!-- HORLOGE -->
+    <!-- CLOCK -->
     <div class="clock-panel">
         <div class="clock" id="clock">00:00:00</div>
     </div>
 
-    <!-- TABLEAU -->
+    <!-- TABLE -->
     <div class="train-panel" id="table"></div>
 
 </div>
@@ -185,29 +185,23 @@ body {
 <script>
 
 /* ==========================================
-   VARIABLES FACILES A MODIFIER
+   VARIABLES
 ========================================== */
 
-// Nom de la gare
-const station = {
-    nom: "Maisons-Laffitte",
-    logo: "A"
-};
-
-// Liste des trains
+const station = {nom: "Maisons-Laffitte", logo: "A"};
 const clock = "22:15:24"
 const trains = [
-    {temps: "3", heure: "14:05", destination: "Boissy", retard: ""},
-    {temps: "6", heure: "14:12", destination: "Marne-la-Vallée", retard: "⚠️ 2min"},
-    {temps: "10", heure: "14:20", destination: "Boissy", retard: ""},
-    {temps: "16", heure: "14:29", destination: "Boissy", retard: ""},
-    {temps: "25", heure: "14:37", destination: "Marne-la-Vallée", retard: ""},
-    {temps: "28", heure: "14:47", destination: "Marne-la-Vallée", retard: ""}
+    {time: "3", hour: "14:05", destination: "Boissy", delay: ""},
+    {time: "6", hour: "14:12", destination: "Marne-la-Vallée", delay: "⚠️ 2min"},
+    {time: "10", hour: "14:20", destination: "Boissy", delay: ""},
+    {time: "16", hour: "14:29", destination: "Boissy", delay: ""},
+    {time: "25", hour: "14:37", destination: "Marne-la-Vallée", delay: ""},
+    {time: "28", hour: "14:47", destination: "Marne-la-Vallée", delay: ""}
 ];
 
 
 /* ==========================================
-   AFFICHAGE DU BANDEAU
+   HEADER DISPLAY
 ========================================== */
 
 document.getElementById("station").textContent = station.nom;
@@ -215,7 +209,7 @@ document.getElementById("logo").textContent = station.logo;
 
 
 /* ==========================================
-   CONSTRUCTION DU TABLEAU
+   DATA INSERTION
 ========================================== */
 
 function buildTable() {
@@ -223,10 +217,10 @@ function buildTable() {
     const table = document.getElementById("table");
     table.innerHTML = trains.map(t => `
         <div class="row">
-            <span class="time">${t.temps}</span>
-            <span class="delay">${t.retard}</span>
+            <span class="time">${t.time}</span>
+            <span class="delay">${t.delay}</span>
             <span class="destination">${t.destination}</span>
-            <span class="hour">${t.heure}</span>
+            <span class="hour">${t.hour}</span>
         </div>
     `).join("");
 
@@ -238,7 +232,7 @@ function buildClock() {
 }
 
 
-// Construction des données
+// INFO: call data build
 buildTable();
 buildClock();
 
