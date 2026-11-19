@@ -1,0 +1,248 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Affichage trains</title>
+
+<style>
+/* =================================
+   CONFIGURATION GRAPHIQUE
+================================= */
+
+:root {
+    --background: #101c42;
+    --panel: #1d315e;
+    --red: #c72727;
+    --white: #f5f7fa;
+    --yellow: #ffdf55;
+
+    --width: 320px;
+    --height: 480px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--background);
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--white);
+}
+
+.screen {
+    width: var(--width);
+    height: var(--height);
+    overflow: hidden;
+    background: var(--background);
+    padding: 10px;
+}
+
+/* =================================
+   BANDEAU SUPERIEUR
+================================= */
+
+.header {
+    height: 75px;
+    background: var(--red);
+    border-radius: 10px 0 0 0;
+
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 30px;
+}
+
+.logo {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #e9f5f5;
+    color: #bd3939;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.station {
+    font-size: 22px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* =================================
+   HORLOGE
+================================= */
+
+.clock-panel {
+    height: 80px;
+    margin-top: 10px;
+    border-radius: 18px;
+    background: var(--panel);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clock {
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--red);
+    letter-spacing: -2px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* =================================
+   TABLEAU DES TRAINS
+================================= */
+
+.train-panel {
+    margin-top: 12px;
+    background: var(--panel);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.row {
+    height: 50px;
+    display: grid;
+    grid-template-columns: 35px 70px 1fr 40px;
+    align-items: center;
+    padding: 0 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.09);
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+.time {
+    font-size: 22px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.delay {
+    font-size: 13px;
+    color: var(--yellow);
+    white-space: nowrap;
+}
+
+.destination {
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hour {
+    font-size: 17px;
+    font-weight: bold;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.warning {
+    font-size: 17px;
+    margin-right: 3px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="screen">
+
+    <!-- BANDEAU -->
+    <div class="header">
+        <div class="logo" id="logo"></div>
+        <div class="station" id="station"></div>
+    </div>
+
+    <!-- HORLOGE -->
+    <div class="clock-panel">
+        <div class="clock" id="clock">00:00:00</div>
+    </div>
+
+    <!-- TABLEAU -->
+    <div class="train-panel" id="table"></div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   VARIABLES FACILES A MODIFIER
+========================================== */
+
+// Nom de la gare
+const station = {
+    nom: "Maisons-Laffitte",
+    logo: "A"
+};
+
+// Liste des trains
+const clock = "22:15:24"
+const trains = [
+    {temps: "3", heure: "14:05", destination: "Boissy", retard: ""},
+    {temps: "6", heure: "14:12", destination: "Marne-la-Vallée", retard: "⚠️ 2min"},
+    {temps: "10", heure: "14:20", destination: "Boissy", retard: ""},
+    {temps: "16", heure: "14:29", destination: "Boissy", retard: ""},
+    {temps: "25", heure: "14:37", destination: "Marne-la-Vallée", retard: ""},
+    {temps: "28", heure: "14:47", destination: "Marne-la-Vallée", retard: ""}
+];
+
+
+/* ==========================================
+   AFFICHAGE DU BANDEAU
+========================================== */
+
+document.getElementById("station").textContent = station.nom;
+document.getElementById("logo").textContent = station.logo;
+
+
+/* ==========================================
+   CONSTRUCTION DU TABLEAU
+========================================== */
+
+function buildTable() {
+
+    const table = document.getElementById("table");
+    table.innerHTML = trains.map(t => `
+        <div class="row">
+            <span class="time">${t.temps}</span>
+            <span class="delay">${t.retard}</span>
+            <span class="destination">${t.destination}</span>
+            <span class="hour">${t.heure}</span>
+        </div>
+    `).join("");
+
+}
+
+function buildClock() {
+    const clockElement = document.getElementById("clock");
+    clockElement.textContent = clock;
+}
+
+
+// Construction des données
+buildTable();
+buildClock();
+
+</script>
+
+</body>
+</html>

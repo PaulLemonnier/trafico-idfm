@@ -109,7 +109,7 @@ def format_rer_for_screen(df_result: pd.DataFrame) -> list[dict[str, str]]:
     """Format the DataFrame to obtain a formated list of dict"""
     formated_result = []
     shortname_destination = load_train_ref().get("shortname_destination")
-    df_result = df_result.sort_values(by=["expected_departure_from_now"]).reset_index(drop=True).head(5)
+    df_result = df_result.sort_values(by=["expected_departure_from_now"]).reset_index(drop=True).head(6)
     for index in df_result.index:
         train_delay = df_result.loc[index,"delay"] # train delay (ex: A l'heure)
         train_type = df_result.loc[index,"type"] # train type (ex: RERA)
