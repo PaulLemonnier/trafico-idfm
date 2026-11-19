@@ -72,7 +72,7 @@ def render_and_display() -> None:
 
     subprocess.run(["sudo", "pkill", "fbi"], check=False)
     subprocess.run(
-        ["sudo", "fbi", "-T", "1", "-d", "/dev/fb1", "-a", 
+        ["sudo", "fbi", "-T", "1", "-d", "/dev/fb1", "-a", "-noverbose", 
          str(IMAGE_PATH)
         ],
         check=True,
@@ -97,3 +97,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# python -m src.dashboard.screen_display_process
