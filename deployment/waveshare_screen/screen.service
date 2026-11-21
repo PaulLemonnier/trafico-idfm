@@ -1,0 +1,20 @@
+[Unit]
+Description=Launch screen compute process
+
+After=network.target activate-lcd.service api.service 
+Requires=activate-lcd.service api.service
+
+[Service]
+# INFO: User name Linux
+User=paul
+
+WorkingDirectory=/home/paul/trafico-idfm
+
+ExecStart=/home/paul/trafico-idfm/.venv/bin/python -m src.dashboard.screen_display_process
+
+# INFO: Automatically restart the service when crash
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

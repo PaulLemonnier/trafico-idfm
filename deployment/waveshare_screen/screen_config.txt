@@ -1,0 +1,77 @@
+# Update de la carte
+sudo apt update
+sudo apt full-upgrade -y
+sudo reboot
+
+# Installation firmware st7796s
+sudo install -m 644 st7796s.bin /lib/firmware/st7796s.bin
+
+# Réglage SPI (Interface > SPI > Enable)
+sudo raspi-config
+
+# Ajouter des configs dans /boot/firmware/config.txt
+sudo nano /boot/firmware/config.txt
+"""
+dtparam=spi=on
+dtoverlay=mipi-dbi-spi,speed=16000000
+dtparam=compatible=st7796s\0panel-mipi-dbi-spi
+dtparam=reset-gpio=27,dc-gpio=25,backlight-gpio=18
+"""
+
+# Activation de l'écran (à chaque boot)
+sudo sh -c 'echo 0 > /sys/class/graphics/fb1/blank'
+
+# Affichage d'une image (auto dimensionné)
+sudo fbi -T 1 -d /dev/fb1 -a -noverbose image.png
+
+# Effacer le framebuffer (clean l'écran)
+sudo dd if=/dev/zero of=/dev/fb1
+
+# Activation rétro éclairage
+sudo pinctrl set 18 op dh
+
+# Vérification version système
+uname -a
+
+
+___Vérification___
+
+paul@pi:~ $ ls /dev/spidev*
+/dev/spidev0.1
+
+paul@pi:~ $ ls /sys/bus/spi/devices/
+spi0.0  spi0.1
+
+paul@pi:~ $ ls -lh /lib/firmware/st7796s.bin
+-rw-r--r-- 1 root root 117 Nov 18 11:40 /lib/firmware/st7796s.bin
+
+paul@pi:~ $ cat /sys/class/graphics/fb1/name
+panel-mipi-dbid
+
+paul@pi:~ $ cat /sys/class/drm/card0-SPI-1/status
+connected
+
+paul@pi:~ $ fbset -fb /dev/fb1
+mode "480x320"
+    geometry 480 320 480 320 16
+    timings 0 0 0 0 0 0 0
+    rgba 5/11,6/5,5/0,0/0
+endmode
+
+___Connectivité broche et cables___
+
+VCC = pin 2 (5V)
+3V3 = pin 1 (3V3)
+GND = pin 6 (Ground)
+MISO = pin 21 (GPIO 9)
+MOSI = pin 19 (GPIO 10)
+SCLK = pin 23 (GPIO 11)
+SD_CS = pin 26 (GPIO 7)
+LCD_CS = pin 24 (GPIO 8)
+LCD_DC = pin 22 (GPIO 25)
+LCD_RST = pin 13 (GPIO 27)
+LCD_BL = pin 12 (GPIO 18)
+TP_SDA = pin 3 (GPI0 2)
+TP_SCL = pin 5 (GPIO 3)
+INT = pin 7 (GPIO 4)
+RST = pin 11 (GPIO 17)

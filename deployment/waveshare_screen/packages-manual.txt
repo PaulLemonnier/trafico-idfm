@@ -1,0 +1,7 @@
+git
+fbi
+fbset
+# fim
+python3-numpy
+libopenblas0 # HACK resolve numpy error
+wkhtmltopdf
