@@ -63,9 +63,17 @@ def inject_dashboard_data(payload: dict) -> None:
 
 def render_and_display() -> None:
     subprocess.run(
-        ["wkhtmltoimage", "--width", "320", "--height", "480",
+        [
+            "wkhtmltoimage",
+            "--enable-javascript",
+            "--javascript-delay",
+            "5000",
+            "--width",
+            "320",
+            "--height",
+            "480",
             str(GENERATED_HTML_PATH),
-            str(IMAGE_PATH)
+            str(IMAGE_PATH),
         ],
         check=True,
     )

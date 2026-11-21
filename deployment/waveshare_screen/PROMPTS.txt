@@ -45,7 +45,7 @@ sudo reboot
 # Réglage SPI (Interface > SPI > Enable)
 sudo raspi-config
 
-# Activation de l'écran
+# Activation de l'écran (à chaque boot)
 sudo sh -c 'echo 0 > /sys/class/graphics/fb1/blank'
 
 # Installation firmware st7796s
