@@ -91,7 +91,7 @@ def main() -> None:
         except (subprocess.SubprocessError, FileNotFoundError, OSError) as exc:
             print(f"Impossible to update the screen: {exc}")
 
-        time.sleep(30)
+        time.sleep(60)
 
 
 if __name__ == "__main__":
