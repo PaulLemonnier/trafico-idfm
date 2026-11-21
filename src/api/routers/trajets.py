@@ -63,6 +63,6 @@ def post_display_screen(
                                 ))
 
     return jsonable_encoder({
-        "clock": datetime.now().strftime("%H:%M:%S"),
+        "clock": datetime.now().strftime("%H:%M"),
         "trains": trains_infos
     })

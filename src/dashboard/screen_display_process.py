@@ -31,12 +31,12 @@ def inject_dashboard_data(payload: dict) -> None:
 
     train_rows = "\n".join(
         (
-            '<div class="row">'
-            f'<span class="time">{escape(str(train["time"]))}</span>'
-            f'<span class="delay">{escape(str(train["delay"]))}</span>'
-            f'<span class="destination">{escape(str(train["destination"]))}</span>'
-            f'<span class="hour">{escape(str(train["hour"]))}</span>'
-            "</div>"
+            '<tr class="row">'
+            f'<td class="time">{escape(str(train["time"]))}</td>'
+            f'<td class="delay">{escape(str(train["delay"]))}</td>'
+            f'<td class="destination">{escape(str(train["destination"]))}</td>'
+            f'<td class="hour">{escape(str(train["hour"]))}</td>'
+            "</tr>"
         )
         for train in payload["trains"]
     )
@@ -44,7 +44,7 @@ def inject_dashboard_data(payload: dict) -> None:
         "<!-- DISPLAY_LOGO -->": "A",
         "<!-- DISPLAY_STATION -->": "Maisons-Laffitte",
         "<!-- DISPLAY_CLOCK -->": escape(str(payload["clock"])),
-        "<!-- DISPLAY_TRAINS -->": train_rows,
+        "<!-- DISPLAY_TRAINS -->": f"<tbody>{train_rows}</tbody>",
     }
 
     for placeholder, value in replacements.items():

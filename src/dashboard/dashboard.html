@@ -13,14 +13,6 @@
 ================================= */
 
 :root {
-    --background: #101c42;
-    --panel: #1d315e;
-    --red: #c72727;
-    --white: #f5f7fa;
-    --yellow: #ffdf55;
-
-    --width: 320px;
-    --height: 480px;
 }
 
 * {
@@ -30,16 +22,16 @@
 body {
     margin: 0;
     padding: 0;
-    background: var(--background);
-    font-family: "Segoe UI", Arial, sans-serif;
-    color: var(--white);
+    background: #101c42;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #f5f7fa;
 }
 
 .screen {
-    width: var(--width);
-    height: var(--height);
+    width: 320px;
+    height: 480px;
     overflow: hidden;
-    background: var(--background);
+    background: #101c42;
     padding: 10px;
 }
 
@@ -49,13 +41,23 @@ body {
 
 .header {
     height: 75px;
-    background: var(--red);
+    background: #c72727;
     border-radius: 10px 0 0 0;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    padding: 0;
+}
 
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    gap: 30px;
+.logo-cell,
+.station {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.logo-cell {
+    width: 65px;
+    padding-left: 10px;
 }
 
 .logo {
@@ -65,10 +67,8 @@ body {
     background: #e9f5f5;
     color: #bd3939;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+    line-height: 45px;
+    text-align: center;
     font-size: 27px;
     font-weight: bold;
 }
@@ -77,6 +77,7 @@ body {
     font-size: 22px;
     font-weight: bold;
     white-space: nowrap;
+    padding-left: 10px;
 }
 
 /* =================================
@@ -87,17 +88,18 @@ body {
     height: 80px;
     margin-top: 10px;
     border-radius: 18px;
-    background: var(--panel);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: #1d315e;
+    text-align: center;
+    line-height: 80px;
 }
 
 .clock {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
     font-size: 52px;
     font-weight: 800;
-    color: var(--red);
+    color: #c72727;
     letter-spacing: -2px;
     font-variant-numeric: tabular-nums;
 }
@@ -107,34 +109,46 @@ body {
 ================================= */
 
 .train-panel {
+    width: 100%;
     margin-top: 12px;
-    background: var(--panel);
+    background: #1d315e;
     border-radius: 15px;
     overflow: hidden;
 }
 
-.row {
-    height: 50px;
-    display: grid;
-    grid-template-columns: 35px 70px 1fr 40px;
-    align-items: center;
-    padding: 0 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.09);
+.train-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
 }
 
-.row:last-child {
+.row {
+    height: 50px;
+}
+
+.row td {
+    height: 50px;
+    padding: 0 4px;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(255,255,255,0.09);
+    overflow: hidden;
+}
+
+.row:last-child td {
     border-bottom: none;
 }
 
 .time {
+    width: 35px;
     font-size: 22px;
     font-weight: 800;
     text-align: center;
+    white-space: nowrap;
 }
 
 .delay {
     font-size: 13px;
-    color: var(--yellow);
+    color: #ffdf55;
     white-space: nowrap;
 }
 
@@ -147,6 +161,7 @@ body {
 }
 
 .hour {
+    width: 55px;
     font-size: 17px;
     font-weight: bold;
     text-align: right;
@@ -167,7 +182,7 @@ body {
 
     <!-- HEADER -->
     <div class="header">
-        <div class="logo" id="logo"><!-- DISPLAY_LOGO --></div>
+        <div class="logo-cell"><div class="logo" id="logo"><!-- DISPLAY_LOGO --></div></div>
         <div class="station" id="station"><!-- DISPLAY_STATION --></div>
     </div>
 
@@ -177,7 +192,9 @@ body {
     </div>
 
     <!-- TABLE -->
-    <div class="train-panel" id="table"><!-- DISPLAY_TRAINS --></div>
+    <div class="train-panel">
+        <table class="train-table" id="table"><!-- DISPLAY_TRAINS --></table>
+    </div>
 
 </div>
 
