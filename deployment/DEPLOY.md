@@ -46,3 +46,13 @@ journalctl -u telegram -f
 journalctl -u activate-lcd -f
 journalctl -u screen -f
 ```
+
+5) Allows sudo for certain commands
+```bash
+sudo visudo -f /etc/sudoers.d/waveshare-fbi
+```
+Add these lines to the file
+```bash
+paul ALL=(root) NOPASSWD: /usr/bin/pkill fbi
+paul ALL=(root) NOPASSWD: /usr/bin/fbi -T 1 -d /dev/fb1 -a -noverbose *
+```
