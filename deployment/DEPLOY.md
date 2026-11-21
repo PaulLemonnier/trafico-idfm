@@ -6,7 +6,7 @@ These commands will allow you to deploy the project so that the applications lau
 Navigate to the deployment folder.
 
 ```bash
-sudo cp raspberry/api.service raspberry/telegram.service /etc/systemd/system/
+sudo cp raspberrypi/api.service raspberrypi/telegram.service /etc/systemd/system/
 sudo cp waveshare_screen/activate-lcd.service waveshare_screen/screen.service /etc/systemd/system/
 ```
 
