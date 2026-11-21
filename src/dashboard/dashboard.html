@@ -167,76 +167,19 @@ body {
 
     <!-- HEADER -->
     <div class="header">
-        <div class="logo" id="logo"></div>
-        <div class="station" id="station"></div>
+        <div class="logo" id="logo"><!-- DISPLAY_LOGO --></div>
+        <div class="station" id="station"><!-- DISPLAY_STATION --></div>
     </div>
 
     <!-- CLOCK -->
     <div class="clock-panel">
-        <div class="clock" id="clock">00:00:00</div>
+        <div class="clock" id="clock"><!-- DISPLAY_CLOCK --></div>
     </div>
 
     <!-- TABLE -->
-    <div class="train-panel" id="table"></div>
+    <div class="train-panel" id="table"><!-- DISPLAY_TRAINS --></div>
 
 </div>
-
-
-<script>
-
-/* ==========================================
-   VARIABLES
-========================================== */
-
-const station = {nom: "Maisons-Laffitte", logo: "A"};
-const clock = "22:15:24"
-const trains = [
-    {time: "3", hour: "14:05", destination: "Boissy", delay: ""},
-    {time: "6", hour: "14:12", destination: "Marne-la-Vallée", delay: "⚠️ 2min"},
-    {time: "10", hour: "14:20", destination: "Boissy", delay: ""},
-    {time: "16", hour: "14:29", destination: "Boissy", delay: ""},
-    {time: "25", hour: "14:37", destination: "Marne-la-Vallée", delay: ""},
-    {time: "28", hour: "14:47", destination: "Marne-la-Vallée", delay: ""}
-];
-
-
-/* ==========================================
-   HEADER DISPLAY
-========================================== */
-
-document.getElementById("station").textContent = station.nom;
-document.getElementById("logo").textContent = station.logo;
-
-
-/* ==========================================
-   DATA INSERTION
-========================================== */
-
-function buildTable() {
-
-    const table = document.getElementById("table");
-    table.innerHTML = trains.map(t => `
-        <div class="row">
-            <span class="time">${t.time}</span>
-            <span class="delay">${t.delay}</span>
-            <span class="destination">${t.destination}</span>
-            <span class="hour">${t.hour}</span>
-        </div>
-    `).join("");
-
-}
-
-function buildClock() {
-    const clockElement = document.getElementById("clock");
-    clockElement.textContent = clock;
-}
-
-
-// INFO: call data build
-buildTable();
-buildClock();
-
-</script>
 
 </body>
 </html>

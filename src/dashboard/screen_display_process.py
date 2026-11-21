@@ -1,7 +1,6 @@
 """Refresh the Waveshare screen with the next RER A departures."""
 
-import json
-import re
+from html import escape
 import subprocess
 import time
 from pathlib import Path
@@ -30,33 +29,28 @@ def request_screen_data() -> dict:
 def inject_dashboard_data(payload: dict) -> None:
     html = HTML_PATH.read_text(encoding="utf-8")
 
-    station = {
-        "nom": "Maisons-Laffitte",
-        "logo": "A",
+    train_rows = "\n".join(
+        (
+            '<div class="row">'
+            f'<span class="time">{escape(str(train["time"]))}</span>'
+            f'<span class="delay">{escape(str(train["delay"]))}</span>'
+            f'<span class="destination">{escape(str(train["destination"]))}</span>'
+            f'<span class="hour">{escape(str(train["hour"]))}</span>'
+            "</div>"
+        )
+        for train in payload["trains"]
+    )
+    replacements = {
+        "<!-- DISPLAY_LOGO -->": "A",
+        "<!-- DISPLAY_STATION -->": "Maisons-Laffitte",
+        "<!-- DISPLAY_CLOCK -->": escape(str(payload["clock"])),
+        "<!-- DISPLAY_TRAINS -->": train_rows,
     }
-    trains = payload["trains"]
-    clock = payload["clock"]
 
-    html = re.sub(
-        r"const\s+station\s*=.*?;",
-        f"const station = {json.dumps(station, ensure_ascii=False)};",
-        html,
-        count=1,
-        flags=re.DOTALL,
-    )
-    html = re.sub(
-        r"const\s+clock\s*=.*",
-        f"const clock = {json.dumps(clock, ensure_ascii=False)}",
-        html,
-        count=1,
-    )
-    html = re.sub(
-        r"const\s+trains\s*=.*?];",
-        f"const trains = {json.dumps(trains, ensure_ascii=False)};",
-        html,
-        count=1,
-        flags=re.DOTALL,
-    )
+    for placeholder, value in replacements.items():
+        if placeholder not in html:
+            raise ValueError(f"Missing dashboard placeholder: {placeholder}")
+        html = html.replace(placeholder, value, 1)
 
     GENERATED_HTML_PATH.write_text(html, encoding="utf-8")
 
@@ -65,9 +59,6 @@ def render_and_display() -> None:
     subprocess.run(
         [
             "wkhtmltoimage",
-            "--enable-javascript",
-            "--javascript-delay",
-            "5000",
             "--width",
             "320",
             "--height",
